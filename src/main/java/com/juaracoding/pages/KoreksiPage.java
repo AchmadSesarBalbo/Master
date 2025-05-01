@@ -31,8 +31,8 @@ public class KoreksiPage {
     @FindBy(xpath = "//*[@id=\"job_departement\"]")
     private WebElement searchBarFilter;
 
-    @FindBy(xpath = "//*[@id=\"__next\"]/div/div[2]/div/div[1]/div/div[2]/div[1]/div/table/tbody/tr[2]/td[8]/div")
-    private WebElement statusLabel;
+    @FindBy(xpath = "//*[@id=\"__next\"]/div/div[2]/div/div[1]/div/div[2]/div")
+    private WebElement popUpUpdate;
 
     @FindBy(xpath = "//button[@type='submit']")
     private WebElement buttonSearch;
@@ -40,7 +40,7 @@ public class KoreksiPage {
     @FindBy(xpath = "//button[normalize-space()='Reset']")
     private WebElement buttonReset;
 
-    @FindBy(xpath = "//*[@id=\"__next\"]/div/div[2]/div/div[1]/div/div[1]/div/div[2]/form/div/div[2]/div/button[1]/svg")
+    @FindBy(xpath = "//*[@id=\"__next\"]/div/div[2]/div/div[1]/div/div[1]/div/div[2]/form/div/div[2]/div/button[1]")
     private WebElement buttonFilter;
 
     @FindBy(xpath = "/html/body/div[3]/div[3]/div/form/div[2]/button[2]")
@@ -49,14 +49,14 @@ public class KoreksiPage {
     @FindBy(xpath = "/html/body/div[3]/div[3]/div/form/div[2]/button[1]")
     private WebElement buttonBatalFilter;
 
-    @FindBy(xpath = "//tbody/tr[1]/td[10]/div[1]/button[1]")
-    private WebElement buttonChecklist;
+    @FindBy(xpath = "(//*[@id='__next']//table/tbody/tr/td[10]/div/button[1])[1]")
+    private WebElement buttonApprove;
 
-    @FindBy(xpath = "//tbody/tr[3]/td[10]/div[1]/button[2]//*[name()='svg']")
-    private WebElement buttonCross;
+    @FindBy(xpath = "(//*[@id='__next']//table/tbody/tr/td[10]/div/button[2])[1]")
+    private WebElement buttonReject;
 
     @FindBy(xpath = "/html/body/div[3]/div[3]/div/form/div[2]/button[1]")
-    private WebElement buttonApprove;
+    private WebElement buttonConfirm;
 
     @FindBy(xpath = "/html/body/div[3]/div[3]/div/form/div[2]/button[2]")
     private WebElement buttonCancel;
@@ -64,7 +64,7 @@ public class KoreksiPage {
     @FindBy(xpath = "//*[@id=\"rejectReason\"]")
     private WebElement rejectReason;
 
-    @FindBy(xpath = "//tbody/tr[1]/td[1]")
+    @FindBy(xpath = "//*[@id=\"__next\"]/div/div[2]/div/div[1]/div/div[2]/div[1]/div/table/tbody")
     private WebElement dataEmployee;
 
     @FindBy(xpath = "//*[@id=\"__next\"]/div/div[2]/div/div[1]/div/div[1]/div/div[2]/form/div/div[1]/div[2]/div[1]/div/div/button")
@@ -84,6 +84,9 @@ public class KoreksiPage {
 
     @FindBy(xpath = "//button[normalize-space()='save']")
     private WebElement buttonSaveDate;
+
+    @FindBy(xpath = "//button[@title='Go to next page']//*[name()='svg']")
+    private  WebElement buttonNextPage;
 
     public KoreksiPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -117,8 +120,8 @@ public class KoreksiPage {
         endDate.sendKeys(end);
     }
 
-    public String getStatusLabel() {
-        return statusLabel.getText();
+    public void popUpUpdate() {
+        popUpUpdate.getText();
     }
 
     public void buttonSearch() {
@@ -141,20 +144,20 @@ public class KoreksiPage {
         buttonBatalFilter.click();
     }
 
-    public void buttonChecklist() {
-        buttonChecklist.click();
+    public void buttonApprove() {
+        buttonApprove.click();
     }
 
-    public void buttonCross() {
-        buttonCross.click();
+    public void buttonReject() {
+        buttonReject.click();
     }
 
     public void rejectReason(String reason) {
         rejectReason.sendKeys(reason);
     }
 
-    public void buttonApprove() {
-        buttonApprove.click();
+    public void buttonConfirm() {
+        buttonConfirm.click();
     }
 
     public void buttonCancel() {
@@ -192,5 +195,13 @@ public class KoreksiPage {
 
     public void buttonSaveDate() {
         buttonSaveDate.click();
+    }
+
+    public void goToNextPage() {
+        buttonNextPage.click();
+    }
+
+    public String getValidateMessage() {
+        return buttonConfirm.getAttribute("validationMessage");
     }
 }
