@@ -1,14 +1,13 @@
 package com.juaracoding.pages;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class KoreksiPage {
-    Action action;
+    private WebDriver driver;
 
     @FindBy(xpath = "//p[normalize-space()='Laporan']")
     private WebElement laporanMenu;
@@ -89,6 +88,7 @@ public class KoreksiPage {
     private  WebElement buttonNextPage;
 
     public KoreksiPage(WebDriver driver) {
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
@@ -108,8 +108,40 @@ public class KoreksiPage {
         searchBar.sendKeys(searchTerm);
     }
 
-    public void searchFilterAction(String searchTerm) {
+    public void searchFilterActionValid(String searchTerm) throws InterruptedException {
         searchBarFilter.sendKeys(searchTerm);
+
+        Thread.sleep(1000); // tunggu opsi muncul
+
+        List<WebElement> options;
+        options = By.xpath("//li[contains(@class,'MuiAutocomplete-option')]").findElements((SearchContext) driver);
+
+        if (!options.isEmpty()) {
+            for (WebElement option : options) {
+                if (option.getText().toLowerCase().contains(searchTerm.toLowerCase())) {
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", option);
+                    return;
+                }
+            }
+            throw new RuntimeException("Expected valid option but no matching found.");
+        } else {
+            throw new RuntimeException("No options found for valid unit.");
+        }
+    }
+
+    public void searchFilterActionInvalid(String searchTerm) throws InterruptedException {
+        searchBarFilter.sendKeys(searchTerm);
+
+        Thread.sleep(1000); // tunggu opsi muncul
+
+        List<WebElement> options;
+        options = By.xpath("//li[contains(@class,'MuiAutocomplete-option')]").findElements((SearchContext) driver);
+
+        if (options.isEmpty()) {
+            searchBarFilter.sendKeys(Keys.ESCAPE); // tutup dropdown
+        } else {
+            throw new RuntimeException("Expected no results but some options appeared.");
+        }
     }
 
     public void startDate(String start) {

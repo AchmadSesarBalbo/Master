@@ -7,6 +7,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
@@ -45,21 +46,9 @@ public class KoreksiStepTest {
     }
 
     @And("Admin inputs {string} in the search field")
-    public void adminInputsInTheSearchField(String searchTerm) throws InterruptedException {
+    public void adminInputsInTheSearchField(String name) throws InterruptedException {
         Thread.sleep(2000);
-        koreksiPage.searchAction(searchTerm);
-    }
-
-    @And("Admin selects start date {string} and end date {string}")
-    public void adminSelectsStartDateAndEndDate(String date0, String date1) throws InterruptedException {
-        Thread.sleep(2000);
-        koreksiPage.buttonStartDate();
-        Thread.sleep(2000);
-        koreksiPage.earlyDateInput(date0);
-        Thread.sleep(2000);
-        koreksiPage.continueDateInput(date1);
-        Thread.sleep(2000);
-        koreksiPage.buttonSaveDate();
+        koreksiPage.searchAction(name);
     }
 
     @And("Admin clicks the Search button")
@@ -68,32 +57,62 @@ public class KoreksiStepTest {
         koreksiPage.buttonSearch();
     }
 
-    @Then("Correction data should be displayed based on the name and date range")
-    public void correctionDataShouldBeDisplayedBasedOnTheNameAndDateRange() throws InterruptedException {
+    @Then("The correction data related to the employee name is displayed")
+    public void theCorrectionDataRelatedToTheEmployeeNameIsDisplayed() throws InterruptedException {
         Thread.sleep(2000);
         koreksiPage.getDataEmployee();
     }
 
-    @When("Admin clicks the Filter button")
+    @When("Admin clicks the Reset button")
+    public void adminClicksTheResetButton() throws InterruptedException {
+        Thread.sleep(2000);
+        koreksiPage.buttonReset();
+    }
+
+    @And("Admin selects start date {string} and end date {string}")
+    public void adminSelectsStartDateAndEndDate(String startDate, String endDate) throws InterruptedException {
+        Thread.sleep(2000);
+        koreksiPage.buttonStartDate();
+        Thread.sleep(2000);
+        koreksiPage.earlyDateInput(startDate);
+        Thread.sleep(2000);
+        koreksiPage.continueDateInput(endDate);
+        Thread.sleep(2000);
+        koreksiPage.buttonSaveDate();
+    }
+
+    @Then("The correction data within the selected date range is displayed")
+    public void theCorrectionDataWithinTheSelectedDateRangeIsDisplayed() throws InterruptedException {
+        Thread.sleep(2000);
+        koreksiPage.getDataEmployee();
+    }
+
+    @Then("The correction data filtered by name and date is displayed")
+    public void theCorrectionDataFilteredByNameAndDateIsDisplayed() throws InterruptedException {
+        Thread.sleep(2000);
+        koreksiPage.getDataEmployee();
+    }
+
+    @And("Admin clicks the Filter button")
     public void adminClicksTheFilterButton() throws InterruptedException {
         Thread.sleep(2000);
         koreksiPage.buttonFilter();
     }
 
     @And("Admin inputs unit name {string}")
-    public void adminInputsUnitName(String unitTerm) throws InterruptedException {
+    public void adminInputsUnitName(String unitName) throws InterruptedException {
         Thread.sleep(2000);
-        koreksiPage.searchFilterAction(unitTerm);
+        koreksiPage.searchFilterActionValid(unitName);
     }
 
-    @And("Admin clicks the Apply filter button")
-    public void adminClicksTheApplyFilterButton() throws InterruptedException {
+    @And("Admin clicks the Apply button")
+    public void adminClicksTheApplyButton() throws InterruptedException {
         Thread.sleep(2000);
         koreksiPage.buttonTerapkanFilter();
     }
 
-    @Then("Correction data should be displayed only from the selected unit")
-    public void correctionDataShouldBeDisplayedOnlyFromTheSelectedUnit() throws InterruptedException {
+    @Then("The correction data related to the unit name is displayed")
+    public void theCorrectionDataRelatedToTheUnitNameIsDisplayed() throws InterruptedException {
         Thread.sleep(2000);
         koreksiPage.getDataEmployee();
     }
@@ -112,8 +131,8 @@ public class KoreksiStepTest {
         koreksiPage.buttonConfirm();
     }
 
-    @Then("A success popup should appear with message {string}")
-    public void aSuccessPopupShouldAppearWithMessage(String arg0) throws InterruptedException {
+    @Then("A success popup should appear")
+    public void aSuccessPopupShouldAppear() throws InterruptedException {
         Thread.sleep(2000);
         koreksiPage.popUpUpdate();
     }
@@ -127,9 +146,9 @@ public class KoreksiStepTest {
     }
 
     @And("Admin inputs rejection reason {string}")
-    public void adminInputsRejectionReason(String reasonTerm) throws InterruptedException {
+    public void adminInputsRejectionReason(String reason) throws InterruptedException {
         Thread.sleep(2000);
-        koreksiPage.rejectReason(reasonTerm);
+        koreksiPage.rejectReason(reason);
     }
 
     @And("Admin clicks the Submit rejection button")
@@ -138,41 +157,17 @@ public class KoreksiStepTest {
         koreksiPage.buttonConfirm();
     }
 
-    @When("Admin clicks the Reset button")
-    public void adminClicksTheResetButton() throws InterruptedException {
-        Thread.sleep(2000);
-        koreksiPage.buttonReset();
-    }
-
-    @Then("All filters should be cleared and default data should be displayed")
-    public void allFiltersShouldBeClearedAndDefaultDataShouldBeDisplayed() throws InterruptedException {
-        Thread.sleep(2000);
-        koreksiPage.getDataEmployee();
-    }
-
     //Negative
-    @And("Admin clicks the Search button without entering any filter")
-    public void adminClicksTheSearchButtonWithoutEnteringAnyFilter() throws InterruptedException {
-        Thread.sleep(2000);
-        koreksiPage.buttonSearch();
-    }
-
-    @Then("No correction data should be displayed or an alert message should appear")
-    public void noCorrectionDataShouldBeDisplayedOrAnAlertMessageShouldAppear() throws InterruptedException {
+    @Then("No correction data should be displayed")
+    public void noCorrectionDataShouldBeDisplayed() throws InterruptedException {
         Thread.sleep(2000);
         koreksiPage.getDataEmployee();
     }
 
     @And("Admin inputs invalid unit name {string}")
-    public void adminInputsInvalidUnitName(String unitTerm) throws InterruptedException {
+    public void adminInputsInvalidUnitName(String unitName) throws InterruptedException {
         Thread.sleep(2000);
-        koreksiPage.searchFilterAction(unitTerm);
-    }
-
-    @Then("No correction data should be displayed or an alert should appear")
-    public void noCorrectionDataShouldBeDisplayedOrAnAlertShouldAppear() throws InterruptedException {
-        Thread.sleep(2000);
-        koreksiPage.getDataEmployee();
+        koreksiPage.searchFilterActionInvalid(unitName);
     }
 
     @And("Admin clicks the Submit rejection button without reason")
@@ -181,8 +176,10 @@ public class KoreksiStepTest {
         koreksiPage.buttonConfirm();
     }
 
-    @Then("An alert popup should appear with message {string}")
-    public void anAlertPopupShouldAppearWithMessage(String arg0) {
+    @Then("A validation error should appear indicating reason is required")
+    public void aValidationErrorShouldAppearIndicatingReasonIsRequired() throws InterruptedException {
+        Thread.sleep(2000);
         koreksiPage.getValidateMessage();
+        Thread.sleep(2000);
     }
 }
