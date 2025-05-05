@@ -1,32 +1,32 @@
-Feature: Positive Test Correction Report
+Feature: Correction Report
 
   Background:
     Given Admin is logged in and on the dashboard for Laporan Koreksi
 
   @auth @positive
-  Scenario: Admin searches employee correction by name
+  Scenario: Search correction by employee name
     When Admin navigates to Correction Report
-#    And Admin inputs "Juned" in the search field
-#    And Admin clicks the Search button
-#    Then The correction data related to the employee name is displayed
+    And Admin inputs "Juned" in the search field
+    And Admin clicks the Search button
+    Then Correction report data should be shown by employee name
 
   @positive
-  Scenario: Admin searches employee correction by date
+  Scenario: Search correction by date
     When Admin clicks the Reset button
-    And Admin selects start date "Jan 1, 2025" and end date "Apr 30, 2025"
+    And Admin selects start date "Jan 1, 2025" and end date "Feb 28, 2025"
     And Admin clicks the Search button
     Then The correction data within the selected date range is displayed
 
   @positive
-  Scenario: Admin searches employee correction by name and date
+  Scenario: Search correction by name and date
     When Admin clicks the Reset button
     And Admin inputs "Juned" in the search field
-    And Admin selects start date "Jan 1, 2025" and end date "Apr 30, 2025"
+    And Admin selects start date "Feb 1, 2024" and end date "Feb 29, 2024"
     And Admin clicks the Search button
     Then The correction data filtered by name and date is displayed
 
   @auth @positive
-  Scenario: Admin searches employee correction by unit name
+  Scenario: Search correction by unit name
     When Admin clicks the Reset button
     And Admin clicks the Filter button
     And Admin inputs unit name "Sysmex"
@@ -34,13 +34,13 @@ Feature: Positive Test Correction Report
     Then The correction data related to the unit name is displayed
 
 #  @positive
-#  Scenario: Admin approves a correction
+#  Scenario: Approve a correction request
 #    When Admin clicks the Approve button for the first correction
 #    And Admin clicks the Confirm button
 #    Then A success popup should appear
 #
 #  @positive
-#  Scenario: Admin rejects a correction
+#  Scenario: Reject a correction request
 #    When Admin clicks the Reject button for the first correction
 #    And Admin inputs rejection reason "Alasan tidak valid"
 #    And Admin clicks the Submit rejection button
